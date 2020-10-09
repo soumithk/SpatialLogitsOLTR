@@ -144,21 +144,17 @@ class ResNet(nn.Module):
         x = self.relu(x)
         x = self.maxpool(x)
 
-        x = self.layer1(x)
-        print("layer 1 ", x.shape)
-        x = self.layer2(x)
-        print("layer 2 ", x.shape)
-        x = self.layer3(x)
-        print("layer 3 ", x.shape)
-        x = self.layer4(x)
-        print("layer 4 ", x.shape)
+        x1 = self.layer1(x)
+        x2 = self.layer2(x1)
+        x3 = self.layer3(x2)
+        x4 = self.layer4(x3)
 
         if self.use_modulatedatt:
-            x, feature_maps = self.modulatedatt(x)
+            x4, feature_maps = self.modulatedatt(x4)
         else:
-            feature_maps = None
+            feature_maps = [x1, x2, x3, x4]
 
-        x = self.avgpool(x)
+        x = self.avgpool(x4)
 
         x = x.view(x.size(0), -1)
 

@@ -7,7 +7,7 @@ training_opt['log_dir'] = './logs/ImageNet_LT/stage1'
 training_opt['num_classes'] = 1000
 training_opt['batch_size'] = 128
 training_opt['num_workers'] = 8
-training_opt['num_epochs'] = 30
+training_opt['num_epochs'] = 60
 training_opt['display_step'] = 10
 training_opt['feature_dim'] = 512
 training_opt['open_threshold'] = 0.1
@@ -26,7 +26,7 @@ networks['feat_model'] = {'def_file': './models/ResNet10Feature.py',
 classifier_param = {'in_dim': training_opt['feature_dim'], 'num_classes': training_opt['num_classes'],
                     'stage1_weights': False, 'dataset': training_opt['dataset']}
 classifier_optim_param = {'lr': 0.1, 'momentum': 0.9, 'weight_decay': 0.0005}
-networks['classifier'] = {'def_file': './models/DotProductClassifier.py',
+networks['classifier'] = {'def_file': './models/SpatialLogitsClassifier.py',
                           'params': classifier_param,
                           'optim_params': classifier_optim_param}
 config['networks'] = networks
